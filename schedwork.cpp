@@ -85,13 +85,20 @@ bool schedule(const AvailabilityMatrix& avail, const size_t dailyNeed, const siz
 	int kValue = avail[0].size();
 	int nValue = avail.size();
 	sched.resize(nValue);
+	bool returnValue = true;
 	for (int i = 0; i < nValue; i++) {
 		std::vector<int> todaysWorkers;
 		sched[i].resize(dailyNeed, 0);
 		for (int j = 0; j < kValue; j++) {
-			todaysWorkers.push_back(avail[i][j]);
+			if (avail[i][j]) {
+				todaysWorkers.push_back(i);
+			}
 		}
-		buildScheduleByRow(todaysWorkers, dailyNeed, maxShifts, sched, i, 0, kValue);
+		returnValue = buildScheduleByRow(todaysWorkers, dailyNeed, maxShifts, sched, i, 0, kValue);
+		if (returnValue == false) {
+			return false;
+		}
 	}
+	return returnValue;
 }
 
