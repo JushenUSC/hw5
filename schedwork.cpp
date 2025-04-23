@@ -50,7 +50,7 @@ bool buildScheduleByRow(std::vector<int> todaysWorkers, const size_t dailyNeed, 
 				break;
 			}
 		}
-		return true;
+		return validCombination;
 	}
 }
 
