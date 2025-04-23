@@ -11,35 +11,28 @@
 #include "dict-eng.h"
 using namespace std;
 
+const std::string alphabet = "abcdefghijklmnopqrstuvwxyz";
+
 
 // Add prototypes of helper functions here
 bool isValidWordle(const std::string& in, std::string& current, const std::string& floating, const std::set<std::string>& dict);
-std::set<std::string> wordleHelper(const std::string& in, std::string& current, const std::string& floating, const std::set<std::string>& dict);
+std::string wordleHelper(const std::string& in, std::string& current, const std::string& floating, const std::set<std::string>& dict);
 
 // Definition of primary wordle function
-std::set<std::string> wordle(
-    const std::string& in,
-    const std::string& floating,
-    const std::set<std::string>& dict)
-{
+std::set<std::string> wordle(const std::string& in, const std::string& floating, const std::set<std::string>& dict) {
     // Add your code here
 	std::string current = "";
-	return wordleHelper(in, current, floating, dict);
-
+	std::set<std::string> allValidWords;
+	wordleHelper(in, current, floating, dict, allValidWords);
 }
 
 // Define any helper functions here
 
-std::set<std::string> wordleHelper(const std::string& in, std::string& current, const std::string& floating, const std::set<std::string>& dict) {
-	
+std::string wordleHelper(const std::string& in, std::string& current, const std::string& floating, const std::set<std::string>& dict, std::set<std::string>& allValidWords) {
 	if (isValidWordle(in, current, floating, dict)) {
-		std::set<std::string> validWord;
-		validWord.insert(current);
-		return validWord;
+		return current;
 	}
 	else {
-		std::set<std::string> validWord;
-		std::set<std::string> allValidWords;
 		int pos = current.length();
 		if (in[pos] != '-') {
 			std::string newIn = in;
@@ -48,13 +41,11 @@ std::set<std::string> wordleHelper(const std::string& in, std::string& current, 
 			return wordleHelper(newIn, newCurrent, floating, dict);
 		}
 		else {
-			// Open position ('-')
-			std::set<std::string> allValidWords;
 			for (int i = 0; i < 26; i++) {
-				std::set<std::string> validWord = wordleHelper(in, current + alphabet[i], floating, dict);
-				// Merge validWord into allValidWords
+				current = current + alphabet[i];
+				std::string validWord = wordleHelper(in, current, floating, dict, allValidWords);
+				allValidWords.insert(validWord);
 			}
-			return allValidWords;
 		}
 	}
 }
@@ -71,7 +62,8 @@ bool isValidWordle(const std::string& in, std::string& current, const std::strin
 				return false;
 			}
 		}
-		if (/*current (not currentCopy) is a word in dict*/) {
+		std::set<std::string>::iterator it = dict.find(current);
+		if (it != dict.end()) {
 			return true;
 		}
 	}
