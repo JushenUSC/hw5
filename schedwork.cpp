@@ -22,13 +22,13 @@ static const Worker_T INVALID_ID = (unsigned int)-1;
 
 // Add prototypes for any helper functions here
 bool isValid(DailySchedule& currentSched, const size_t maxShifts, int row, int col, vector<int>& workersShifts, int maxRow);
-bool buildScheduleByRow(std::vector<int> todaysWorkers, const size_t dailyNeed, const size_t maxShifts, DailySchedule& sched, int rowNumber, int colNumber);
+bool buildScheduleByRow(std::vector<int> todaysWorkers, const size_t dailyNeed, const size_t maxShifts, DailySchedule& sched, int rowNumber, int colNumber, int kValue);
 
 
 // Add your implementation of schedule() and other helper functions here
-bool buildScheduleByRow(std::vector<int> todaysWorkers, const size_t dailyNeed, const size_t maxShifts, DailySchedule& sched, int rowNumber, int colNumber) {
+bool buildScheduleByRow(std::vector<int> todaysWorkers, const size_t dailyNeed, const size_t maxShifts, DailySchedule& sched, int rowNumber, int colNumber, int kValue) {
 	if (colNumber == dailyNeed) {
-		std::vector<int> workersShifts(sched[0].size());
+		std::vector<int> workersShifts(kValue);
 		if (isValid(sched, maxShifts, 0, 0, workersShifts, rowNumber)) {
 			return true;
 		}
@@ -39,10 +39,10 @@ bool buildScheduleByRow(std::vector<int> todaysWorkers, const size_t dailyNeed, 
 	else {
 		for (int i = 0; i < todaysWorkers.size(); i++) {
 			sched[rowNumber][colNumber] = todaysWorkers[i];
-			std::vector<int> workersShifts(sched[0].size());
+			std::vector<int> workersShifts(kValue);
 			if (isValid(sched, maxShifts, 0, 0, workersShifts, rowNumber)) {
 				if (colNumber + 1 <= dailyNeed) {
-					buildScheduleByRow(todaysWorkers, dailyNeed, maxShifts, sched, rowNumber, colNumber + 1);
+					buildScheduleByRow(todaysWorkers, dailyNeed, maxShifts, sched, rowNumber, colNumber + 1, kValue);
 				}
 			}
 			else {
@@ -91,7 +91,7 @@ bool schedule(const AvailabilityMatrix& avail, const size_t dailyNeed, const siz
 		for (int j = 0; j < kValue; j++) {
 			todaysWorkers.push_back(avail[i][j]);
 		}
-		buildScheduleByRow(todaysWorkers, dailyNeed, maxShifts, sched, i, 0);
+		buildScheduleByRow(todaysWorkers, dailyNeed, maxShifts, sched, i, 0, kValue);
 	}
 }
 
