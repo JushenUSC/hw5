@@ -84,7 +84,7 @@ bool schedule(const AvailabilityMatrix& avail, const size_t dailyNeed, const siz
 	sched.resize(nValue);
 	for (int i = 0; i < nValue; i++) {
 		std::vector<int> todaysWorkers;
-		sched[i].resize(dailyNeed);
+		sched[i].resize(dailyNeed, 0);
 		for (int j = 0; j < kValue; j++) {
 			todaysWorkers.push_back(avail[i][j]);
 		}
