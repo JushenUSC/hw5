@@ -91,7 +91,7 @@ bool schedule(const AvailabilityMatrix& avail, const size_t dailyNeed, const siz
 		sched[i].resize(dailyNeed, 0);
 		for (int j = 0; j < kValue; j++) {
 			if (avail[i][j]) {
-				todaysWorkers.push_back(i);
+				todaysWorkers.push_back(j);
 			}
 		}
 		returnValue = buildScheduleByRow(todaysWorkers, dailyNeed, maxShifts, sched, i, 0, kValue);
