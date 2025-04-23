@@ -37,8 +37,8 @@ bool buildScheduleByRow(std::vector<int> todaysWorkers, const size_t dailyNeed, 
 		}
 	}
 	else {
+		bool validCombination = false;
 		for (int i = 0; i < todaysWorkers.size(); i++) {
-			bool validCombination = true;
 			sched[rowNumber][colNumber] = todaysWorkers[i];
 			std::vector<int> workersShifts(kValue);
 			if (isValid(sched, maxShifts, 0, 0, workersShifts, rowNumber)) {
@@ -47,10 +47,10 @@ bool buildScheduleByRow(std::vector<int> todaysWorkers, const size_t dailyNeed, 
 				}
 			}
 			if (validCombination == true) {
-				return true;
+				break;
 			}
 		}
-		return false;
+		return true;
 	}
 }
 
