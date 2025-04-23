@@ -3,6 +3,7 @@
 #include <iostream>
 // For std::remove
 #include <algorithm> 
+#include <vector>
 #include <map>
 #include <set>
 #endif
