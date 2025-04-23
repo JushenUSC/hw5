@@ -30,13 +30,16 @@ std::set<std::string> wordle(const std::string& in, const std::string& floating,
 // Define any helper functions here
 
 void wordleHelper(const std::string& in, std::string& current, const std::string& floating, const std::set<std::string>& dict, std::set<std::string>& allValidWords) {
-	if (isValidWordle(in, current, floating, dict)) {
-		allValidWords.insert(current);
-	}
-	else {
+	if (current.length() == in.length()) {
 		if (current == "") {
 			return;
 		}
+        if (isValidWordle(in, current, floating, dict)) {
+            allValidWords.insert(current);
+        }
+        return;
+    }
+	else {
 		int pos = current.length();
 		if (in[pos] != '-') {
 			std::string newIn = in;
