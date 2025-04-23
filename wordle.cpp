@@ -45,8 +45,7 @@ void wordleHelper(const std::string& in, std::string current, const std::string&
 	}
 	else {
 		for (int i = 0; i < 26; i++) {
-			current = current + alphabet[i];
-			wordleHelper(in, current, floating, dict, allValidWords);
+			wordleHelper(in, current + alphabet[i], floating, dict, allValidWords);
 		}
 	}
 }
