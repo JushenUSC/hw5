@@ -21,7 +21,7 @@ static const Worker_T INVALID_ID = (unsigned int)-1;
 
 
 // Add prototypes for any helper functions here
-bool isValid(DailySchedule& currentSched, const size_t maxShifts, int row, int col, vector<int>& workersShifts, int maxRow);
+bool isValid(DailySchedule& currentSched, const size_t maxShifts, int row, int col, vector<int>& workersShifts, int maxRow, int maxCol);
 bool buildScheduleByRow(std::vector<int> todaysWorkers, const size_t dailyNeed, const size_t maxShifts, DailySchedule& sched, int rowNumber, int colNumber, int kValue);
 
 
@@ -29,7 +29,7 @@ bool buildScheduleByRow(std::vector<int> todaysWorkers, const size_t dailyNeed, 
 bool buildScheduleByRow(std::vector<int> todaysWorkers, const size_t dailyNeed, const size_t maxShifts, DailySchedule& sched, int rowNumber, int colNumber, int kValue) {
 	if (colNumber == dailyNeed) {
 		std::vector<int> workersShifts(kValue);
-		if (isValid(sched, maxShifts, 0, 0, workersShifts, rowNumber)) {
+		if (isValid(sched, maxShifts, 0, 0, workersShifts, rowNumber, colNumber)) {
 			return true;
 		}
 		else {
@@ -41,7 +41,7 @@ bool buildScheduleByRow(std::vector<int> todaysWorkers, const size_t dailyNeed, 
 		for (int i = 0; i < todaysWorkers.size(); i++) {
 			sched[rowNumber][colNumber] = todaysWorkers[i];
 			std::vector<int> workersShifts(kValue);
-			if (isValid(sched, maxShifts, 0, 0, workersShifts, rowNumber)) {
+			if (isValid(sched, maxShifts, 0, 0, workersShifts, rowNumber, colNumber)) {
 				if (colNumber + 1 <= dailyNeed) {
 					validCombination = buildScheduleByRow(todaysWorkers, dailyNeed, maxShifts, sched, rowNumber, colNumber + 1, kValue);
 				}
@@ -55,8 +55,8 @@ bool buildScheduleByRow(std::vector<int> todaysWorkers, const size_t dailyNeed, 
 }
 
 //recursively checks if currentSched is a valid schedule
-bool isValid(DailySchedule& currentSched, const size_t maxShifts, int row, int col, vector<int>& workersShifts, int maxRow) {
-	if (row > maxRow) {
+bool isValid(DailySchedule& currentSched, const size_t maxShifts, int row, int col, vector<int>& workersShifts, int maxRow, int maxCol) {
+	if (row > maxRow || col > maxCol) {
 		return true;
 	}
 	int workerID = currentSched[row][col];
@@ -66,11 +66,11 @@ bool isValid(DailySchedule& currentSched, const size_t maxShifts, int row, int c
 	}
 	else {
 		if (col + 1 < currentSched[0].size()) {
-			return isValid(currentSched, maxShifts, row, col + 1, workersShifts, maxRow);
+			return isValid(currentSched, maxShifts, row, col + 1, workersShifts, maxRow, maxCol);
 		}
 		else {
 			if (row + 1 < currentSched.size()) {
-				return isValid(currentSched, maxShifts, row + 1, 0, workersShifts, maxRow);
+				return isValid(currentSched, maxShifts, row + 1, 0, workersShifts, maxRow, maxCol);
 			}
 			return true;
 		}
