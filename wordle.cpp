@@ -16,6 +16,7 @@ const std::string alphabet = "abcdefghijklmnopqrstuvwxyz";
 
 // Add prototypes of helper functions here
 std::string wordleHelper(const std::string& in, std::string& current, const std::string& floating, const std::set<std::string>& dict, std::set<std::string>& allValidWords);
+bool isValidWordle(const std::string& in, std::string& current, const std::string& floating, const std::set<std::string>& dict);
 
 // Definition of primary wordle function
 std::set<std::string> wordle(const std::string& in, const std::string& floating, const std::set<std::string>& dict) {
@@ -38,7 +39,7 @@ std::string wordleHelper(const std::string& in, std::string& current, const std:
 			std::string newIn = in;
 			newIn[pos] = '-';
 			std::string newCurrent = current + in[pos];
-			return wordleHelper(newIn, newCurrent, floating, dict);
+			return wordleHelper(newIn, newCurrent, floating, dict, allValidWords);
 		}
 		else {
 			for (int i = 0; i < 26; i++) {
