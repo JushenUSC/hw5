@@ -39,19 +39,14 @@ void wordleHelper(const std::string& in, std::string current, const std::string&
         }
         return;
     }
+	int pos = current.length();
+	if (in[pos] != '-') {
+		wordleHelper(in, current + in[pos], floating, dict, allValidWords);
+	}
 	else {
-		int pos = current.length();
-		if (in[pos] != '-') {
-			std::string newIn = in;
-			newIn[pos] = '-';
-			std::string newCurrent = current + in[pos];
-			wordleHelper(newIn, newCurrent, floating, dict, allValidWords);
-		}
-		else {
-			for (int i = 0; i < 26; i++) {
-				current = current + alphabet[i];
-				wordleHelper(in, current, floating, dict, allValidWords);
-			}
+		for (int i = 0; i < 26; i++) {
+			current = current + alphabet[i];
+			wordleHelper(in, current, floating, dict, allValidWords);
 		}
 	}
 }
