@@ -15,7 +15,7 @@ const std::string alphabet = "abcdefghijklmnopqrstuvwxyz";
 
 
 // Add prototypes of helper functions here
-void wordleHelper(const std::string& in, std::string& current, const std::string& floating, const std::set<std::string>& dict, std::set<std::string>& allValidWords);
+void wordleHelper(const std::string& in, std::string current, const std::string& floating, const std::set<std::string>& dict, std::set<std::string>& allValidWords);
 bool isValidWordle(const std::string& in, std::string& current, const std::string& floating, const std::set<std::string>& dict);
 
 // Definition of primary wordle function
@@ -29,7 +29,7 @@ std::set<std::string> wordle(const std::string& in, const std::string& floating,
 
 // Define any helper functions here
 
-void wordleHelper(const std::string& in, std::string& current, const std::string& floating, const std::set<std::string>& dict, std::set<std::string>& allValidWords) {
+void wordleHelper(const std::string& in, std::string current, const std::string& floating, const std::set<std::string>& dict, std::set<std::string>& allValidWords) {
 	if (current.length() == in.length()) {
 		if (current == "") {
 			return;
