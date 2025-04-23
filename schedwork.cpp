@@ -54,21 +54,26 @@ bool buildScheduleByRow(std::vector<int> todaysWorkers, const size_t dailyNeed, 
 
 //recursively checks if currentSched is a valid schedule
 bool isValid(DailySchedule& currentSched, const size_t maxShifts, int row, int col, vector<int>& workersShifts) {
-	int workerID = currentSched[row][col];
-	workersShifts[workerID]++;
-	if (workersShifts[workerID] > maxShifts) {
-		return false;
-	}
-	else {
-		if (col + 1 < currentSched[0].size()) {
-			return isValid(currentSched, maxShifts, row, col + 1, workersShifts);
+	if (currentSched[row][col]) {
+		int workerID = currentSched[row][col];
+		workersShifts[workerID]++;
+		if (workersShifts[workerID] > maxShifts) {
+			return false;
 		}
 		else {
-			if (row + 1 < currentSched.size()) {
-				return isValid(currentSched, maxShifts, row + 1, 0, workersShifts);
+			if (col + 1 < currentSched[0].size()) {
+				return isValid(currentSched, maxShifts, row, col + 1, workersShifts);
 			}
-			return true;
+			else {
+				if (row + 1 < currentSched.size()) {
+					return isValid(currentSched, maxShifts, row + 1, 0, workersShifts);
+				}
+				return true;
+			}
 		}
+	}
+	else {
+		return;
 	}
 }
 
