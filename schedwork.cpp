@@ -87,5 +87,6 @@ bool schedule(const AvailabilityMatrix& avail, const size_t dailyNeed, const siz
 			todaysWorkers.push_back(avail[i][j]);
 		}
 		buildScheduleByRow(todaysWorkers, dailyNeed, maxShifts, sched, i, 0);
+	}
 }
 
