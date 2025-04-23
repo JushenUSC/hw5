@@ -38,15 +38,16 @@ bool buildScheduleByRow(std::vector<int> todaysWorkers, const size_t dailyNeed, 
 	}
 	else {
 		for (int i = 0; i < todaysWorkers.size(); i++) {
+			bool validCombination = true;
 			sched[rowNumber][colNumber] = todaysWorkers[i];
 			std::vector<int> workersShifts(kValue);
 			if (isValid(sched, maxShifts, 0, 0, workersShifts, rowNumber)) {
 				if (colNumber + 1 <= dailyNeed) {
-					return buildScheduleByRow(todaysWorkers, dailyNeed, maxShifts, sched, rowNumber, colNumber + 1, kValue);
+					validCombination = buildScheduleByRow(todaysWorkers, dailyNeed, maxShifts, sched, rowNumber, colNumber + 1, kValue);
 				}
 			}
-			else {
-				sched[rowNumber][colNumber] = INVALID_ID;
+			if (validCombination == false) {
+				continue;
 			}
 		}
 		return false;
