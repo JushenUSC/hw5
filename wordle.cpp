@@ -51,21 +51,26 @@ void wordleHelper(const std::string& in, std::string current, const std::string&
 }
 
 bool isValidWordle(const std::string& in, std::string& current, const std::string& floating, const std::set<std::string>& dict) {
-	std::string currentCopy = current;
-	if (in.length() == currentCopy.length()) {
-		for (int i = 0; i < floating.length(); i++) {
-			if (currentCopy.find(floating[i]) != string::npos) {
-				int index = currentCopy.find(floating[i]);
-				currentCopy[index] = '-';
-			}
-			else {
-				return false;
-			}
+	if (in.length() != current.length()) {
+        return false;
+    }
+
+    std::vector<int> freq(26, 0);
+    for (char c : current) {
+		int val = c - 'a';
+        freq[val]++; 
+    }
+	int floatLength = floating.length();
+	for (int i = 0; i < floatLength; i++) {
+		char currChar = floating[i];
+		int currVal = currChar - 'a';
+		if (freq[currVal] > 0) {
+			freq[currVal]--;
 		}
-		std::set<std::string>::iterator it = dict.find(current);
-		if (it != dict.end()) {
-			return true;
+		else {
+			return false;
 		}
 	}
-	return false;
+
+    return dict.find(current) != dict.end();
 };
