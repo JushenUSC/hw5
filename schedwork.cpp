@@ -21,7 +21,7 @@ static const Worker_T INVALID_ID = (unsigned int)-1;
 
 
 // Add prototypes for any helper functions here
-bool isValid(DailySchedule& currentSched, const size_t maxShifts, int row, int col, vector<int>& workersShifts);
+bool isValid(DailySchedule& currentSched, const size_t maxShifts, int row, int col, vector<int>& workersShifts, int maxRow);
 bool buildScheduleByRow(std::vector<int> todaysWorkers, const size_t dailyNeed, const size_t maxShifts, DailySchedule& sched, int rowNumber, int colNumber);
 
 
@@ -64,11 +64,11 @@ bool isValid(DailySchedule& currentSched, const size_t maxShifts, int row, int c
 	}
 	else {
 		if (col + 1 < currentSched[0].size()) {
-			return isValid(currentSched, maxShifts, row, col + 1, workersShifts);
+			return isValid(currentSched, maxShifts, row, col + 1, workersShifts, maxRow);
 		}
 		else {
 			if (row + 1 < currentSched.size()) {
-				return isValid(currentSched, maxShifts, row + 1, 0, workersShifts);
+				return isValid(currentSched, maxShifts, row + 1, 0, workersShifts, maxRow);
 			}
 			return true;
 		}
