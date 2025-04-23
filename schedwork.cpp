@@ -42,13 +42,14 @@ bool buildScheduleByRow(std::vector<int> todaysWorkers, const size_t dailyNeed, 
 			std::vector<int> workersShifts(kValue);
 			if (isValid(sched, maxShifts, 0, 0, workersShifts, rowNumber)) {
 				if (colNumber + 1 <= dailyNeed) {
-					buildScheduleByRow(todaysWorkers, dailyNeed, maxShifts, sched, rowNumber, colNumber + 1, kValue);
+					return buildScheduleByRow(todaysWorkers, dailyNeed, maxShifts, sched, rowNumber, colNumber + 1, kValue);
 				}
 			}
 			else {
 				sched[rowNumber][colNumber] = INVALID_ID;
 			}
 		}
+		return false;
 	}
 }
 
